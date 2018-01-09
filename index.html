@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/quill.core.css">
+	<link rel="stylesheet" type="text/css" href="css/quill.snow.css">
+	<link rel="stylesheet" type="text/css" href="css/katex.min.css">
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+
+	<style type="text/css">
+		
+body {
+  background-color: #222;
+  padding: 20px;
+}
+
+.container {
+  background-color: whitesmoke;
+}
+
+#quillEditor {
+  height: 180px;
+  overflow: auto;
+}
+
+#myPrecious:Before {
+  color: lightsteelblue;
+  content: "Delta (Aka precious content) with .getContents() :\A\A";
+}
+
+#myPrecious {
+  padding: 20px;
+  height: 120px;
+  background-color: #444;
+  color: orange;
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  border-radius: 5px;
+  overflow: auto;
+  border: 10px solid #444;
+}
+
+#justText:Before {
+  color: lightsteelblue;
+  content: "Just Text with .getText():\A\A";
+}
+
+#justText {
+  padding: 20px;
+  height: 120px;
+  background-color: #555;
+  color: lightgrey;
+  white-space: pre-wrap;
+  /* css-3 */
+  white-space: -moz-pre-wrap;
+  /* Mozilla, since 1999 */
+  white-space: -pre-wrap;
+  /* Opera 4-6 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* Internet Explorer 5.5+ */
+  border-radius: 5px;
+  overflow: auto;
+  border: 10px solid #555;
+}
+
+#justHtml:Before {
+  color: slategrey;
+  font-weight: bold;
+  content: "Just Html with root.innerHTML";
+}
+
+/* Add you own css or copy it from the theme stylesheet
+ */
+#justHtml {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  margin: 0px;
+  padding: 20px;
+  height: 120px;
+  background-color: white;
+  border-radius: 5px;
+  overflow: auto;
+  border: 10px solid white;
+  margin-top:10px;  
+}
+	</style>
+</head>
+<body>
+<div class="container">
+  <div id="quillEditor">
+  </div>
+</div>
+
+<pre id="myPrecious"></pre>
+
+<div id="justText"></div>
+
+<div id="justHtml"></div>
+
+
+</div>
+</body>
+<script type="text/javascript" src="js/katex.min.js"></script>
+<script type="text/javascript" src="js/quill.min.js"></script>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		/*var quill = new Quill('#editor', {
+  			modules: { toolbar: true },
+  			theme: 'snow'
+		});*/
+var toolbarOptions = [
+  ['bold', 'italic', 'underline', 'strike', 'link'],        // toggled buttons
+  ['blockquote', 'code-block'],
+  ['video', 'image'],
+  //['video', 'formula', 'image'],
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+  //[{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+  [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
+  [{ 'direction': 'rtl' }],                         // text direction
+
+  [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+  //[{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
+  //[{ 'font': [] }],
+  [{ 'align': [] }],
+
+  ['clean']                                         // remove formatting button
+];
+var options = {
+  placeholder: 'Type anything u want',
+  theme: 'snow',
+  modules: {
+    toolbar: toolbarOptions,
+    formula: true          // Include formula module (needs extra css + Katex Script)
+  }
+};
+
+var editor = new Quill('#quillEditor', options);
+var preciousContent = document.getElementById('myPrecious');
+var justTextContent = document.getElementById('justText');
+var justHtmlContent = document.getElementById('justHtml');
+
+editor.on('text-change', function() {
+  var delta = editor.getContents();
+  var text = editor.getText();
+  var justHtml = editor.root.innerHTML;
+  preciousContent.innerHTML = JSON.stringify(delta);
+  justTextContent.innerHTML = text;
+  justHtmlContent.innerHTML = justHtml;
+});
+
+
+	});
+</script>
+</html>
