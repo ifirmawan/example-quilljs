@@ -109,7 +109,8 @@ body {
 
 <div id="justHtml"></div>
 
-
+<div id="preview"></div>
+<div id="toolbar-preview"></div>
 </div>
 </body>
 <script type="text/javascript" src="js/katex.min.js"></script>
@@ -172,12 +173,20 @@ var delta = {
             { insert: ' the ' },
             { insert: 'Grey', attributes: { color: '#ccc' } }
           ]
-        };
-        editor.setContents(delta);
+};
+
+var opsi_preview = {
+  theme : 'snow',
+  readOnly : true,
+  modules: {
+    toolbar: '#toolbar-preview'
+  }
+};
+var preview = new Quill('#preview', opsi_preview);
+preview.setContents(delta);
 
 
-	});
-
+});
 
 </script>
 </html>
