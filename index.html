@@ -100,6 +100,8 @@ body {
   <div id="quillEditor">
   </div>
 </div>
+<div id="quillpreview">
+</div>
 
 <pre id="myPrecious"></pre>
 
@@ -116,10 +118,9 @@ body {
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		/*var quill = new Quill('#editor', {
-  			modules: { toolbar: true },
-  			theme: 'snow'
-		});*/
+		
+
+    
 var toolbarOptions = [
   ['bold', 'italic', 'underline', 'strike', 'link'],        // toggled buttons
   ['blockquote', 'code-block'],
@@ -161,9 +162,22 @@ editor.on('text-change', function() {
   preciousContent.innerHTML = JSON.stringify(delta);
   justTextContent.innerHTML = text;
   justHtmlContent.innerHTML = justHtml;
+ 
+  
 });
+
+var delta = {
+          ops: [
+            { insert: 'Gandalf', attributes: { bold: true } },
+            { insert: ' the ' },
+            { insert: 'Grey', attributes: { color: '#ccc' } }
+          ]
+        };
+        editor.setContents(delta);
 
 
 	});
+
+
 </script>
 </html>
